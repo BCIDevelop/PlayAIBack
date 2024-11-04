@@ -1,3 +1,6 @@
+
+
 export * from './bcryptAdapter';
-export * from './jwtAdapter';
-export * from './mailerAdapter';
+export * from '../../../../shared/adapters/jwtAdapter';
+
+export * from '../../../../shared/adapters/mailerAdapter';

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { JWTAdapter } from '../../application/adapters';
+import { JWTAdapter } from '../../context/users/application/adapters';
 
 
 export const createJWTAdapter = (
