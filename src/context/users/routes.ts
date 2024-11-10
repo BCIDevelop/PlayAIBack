@@ -19,7 +19,9 @@ class UserRouter{
         .patch('/:id',isAuthenticated,sharedValidator.record(),userValidator.updateRecord(),asyncHandler(this.updateUser))
         .post('/login',userValidator.loginUser(),asyncHandler(this.loginUser))
         .post('/signUp',userValidator.createRecord(),asyncHandler(this.signUp))
+       
     }
+   
     async getAllUsers(req:Request,res:Response){
         const controller = new UserController()
         await controller.getUsers(req,res)

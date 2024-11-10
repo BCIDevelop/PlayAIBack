@@ -5,6 +5,7 @@ import { AuthenticationError } from './shared/errors';
 import { errorHandler } from './shared/errorHandler';
 import cors from 'cors'
 import UserRouter from './context/users/routes';
+import AuthRouter from './context/auth/routes'
 import fileUpload from 'express-fileupload'
 class Server{
     public app: Express
@@ -28,6 +29,7 @@ class Server{
     }   
     router(){
         this.app.use('/users',UserRouter.init())
+        this.app.use('/auth',AuthRouter.init())
         this.app.get('/error', (req, res, next) => {
             const error = new AuthenticationError(
               'You are not authorized to access this resource',
