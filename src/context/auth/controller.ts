@@ -47,8 +47,9 @@ class AuthController{
             if(err || !user) return res.redirect(`${process.env.CLIENT_URL}/error`)
             const accessToken = this.service.authFacebook(this.jwt,user._id!)
             const {email,_id,avatar,name,last_name} = user
+            console.log(avatar)
             const url = avatar 
-            ?`${process.env.CLIENT_URL}/auth/success?accessToken=${accessToken}&email=${email}&last_name=${last_name}&name=${name}&id=${_id?.toString()}&avatar=${avatar}`
+            ?`${process.env.CLIENT_URL}/auth/success?accessToken=${accessToken}&email=${email}&last_name=${last_name}&name=${name}&id=${_id?.toString()}&avatar=${encodeURIComponent(avatar)}`
             :`${process.env.CLIENT_URL}/auth/success?accessToken=${accessToken}&email=${email}&last_name=${last_name}&name=${name}&id=${_id?.toString()}` 
             return res.redirect(url);
         })(req,res,next)

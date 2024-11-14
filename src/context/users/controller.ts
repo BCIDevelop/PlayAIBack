@@ -3,6 +3,7 @@ import * as userService from './application'
 import * as dependencies from './infrastructure'
 import { AuthenticatedRequest } from "../../shared/middlewares/isAuthenticated";
 import { Types } from "mongoose";
+import { paginationField, paginationResult } from "../../utils/pagination";
 
 class UserController{
     public service
@@ -19,8 +20,10 @@ class UserController{
         this.jwt = jwtAdapter
     }
     async getUsers(req:Request,res:Response){
-        const records =await this.service.getAllUsers(this.repository)
-        return res.status(200).json(records)
+        const {per_page,page} = req.query
+        const {limit,offset} = paginationField(Number(page),Number(per_page))
+        const {records,counts} =await this.service.getAllUsers(this.repository,limit,offset)
+        return res.status(200).json(paginationResult(records!,counts,Number(page),Number(per_page)))
     }
     async createUser(req:Request,res:Response){
         const record = await this.service.createUserDB(this.encrypt,req.body,this.repository)

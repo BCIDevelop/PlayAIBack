@@ -12,8 +12,8 @@ export const userMongooseRepository: UserRepository = {
     getUserById: async (id) => {
       return await Users.findOne({ _id: id}).select('-password');
     },
-    getAllUsers: async () => {
-      return await Users.find().select('-password');
+    getAllUsers: async (limit,offset) => {
+      return await Users.find().select('-password').skip(offset).limit(limit);
     },
     deleteUserById:async(id)=>{
         return await Users.findOneAndDelete({_id:id})
@@ -23,6 +23,9 @@ export const userMongooseRepository: UserRepository = {
     },
     getUserByEmail:async(email)=>{
       return await Users.findOne({email});
+   },
+   countDocuments:async()=>{
+      return await Users.countDocuments()
    }
     
   };
