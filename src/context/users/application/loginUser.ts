@@ -7,5 +7,6 @@ export const loginUserDB = async (repository:UserRepository,userInput:UserInput,
     if(!record) throw new NotFound("Bad User")
     const verify = await bcryptAdapter.compare(userInput.password,record.password)
     if(!verify) throw new AuthenticationError()
-    return jwtAdapter.generateToken({id:record._id})
+    const access_token =  jwtAdapter.generateToken({id:record._id})
+    return { email: record.email,name:record.name,last_name:record.last_name,avatar:record.avatar,access_token}
 }

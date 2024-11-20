@@ -4,6 +4,7 @@ import * as dependencies from './infrastructure'
 import { AuthenticatedRequest } from "../../shared/middlewares/isAuthenticated";
 import { Types } from "mongoose";
 import { paginationField, paginationResult } from "../../utils/pagination";
+import { User } from "./entity/user";
 
 class UserController{
     public service
@@ -23,7 +24,7 @@ class UserController{
         const {per_page,page} = req.query
         const {limit,offset} = paginationField(Number(page),Number(per_page))
         const {records,counts} =await this.service.getAllUsers(this.repository,limit,offset)
-        return res.status(200).json(paginationResult(records!,counts,Number(page),Number(per_page)))
+        return res.status(200).json(paginationResult<User>(records!,counts,Number(page),Number(per_page)))
     }
     async createUser(req:Request,res:Response){
         const record = await this.service.createUserDB(this.encrypt,req.body,this.repository)
@@ -45,8 +46,8 @@ class UserController{
         return res.status(200).json(record)
     }
     async loginUser(req:Request, res:Response){
-        const access_token = await this.service.loginUserDB(this.repository,req.body,this.encrypt,this.jwt)
-        return res.status(200).json({access_token})
+        const record = await this.service.loginUserDB(this.repository,req.body,this.encrypt,this.jwt)
+        return res.status(200).json(record)
     }
     async signUp(req:Request, res:Response){
         await this.service.signUpUserDB(this.repository,req.body,this.encrypt,this.mailServer,this.jwt)

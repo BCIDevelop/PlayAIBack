@@ -7,14 +7,7 @@ class UserValidations{
     constructor(){
         this.celebrate=celebrator({ reqContext:true},{convert:true})
     }
-    listRecords(){
-        return this.celebrate({
-            [Segments.QUERY]:{
-                page:Joi.number().integer().default(1),
-                per_page:Joi.number().integer().default(10),
-            }
-        })
-    }
+    
     createRecord(){
         const joiCustom=Joi.extend(fileExtensions)
         return this.celebrate({

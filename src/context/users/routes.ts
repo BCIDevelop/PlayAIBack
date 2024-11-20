@@ -11,7 +11,7 @@ class UserRouter{
     }
     init(){
         return this.router
-        .get('/',userValidator.listRecords(),asyncHandler(this.getAllUsers))
+        .get('/',sharedValidator.listRecords(),asyncHandler(this.getAllUsers))
         .patch('/verifyAccount',userValidator.verifyUser(),asyncHandler(this.verifyUser))
         .get('/:id',sharedValidator.record(),asyncHandler(this.getUserById))
         .post('/',userValidator.createRecord(),asyncHandler(this.createUser))

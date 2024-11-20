@@ -11,7 +11,14 @@ export const aiTagRepository: AITagRepository = {
     deleteAITagById:async(id)=>{
         return await Tags.findOneAndDelete({_id:id})
     },
-    getAITags:async()=>{
-        return await Tags.find({})
-    }
+    getAITags:async(limit,offset)=>{
+        return await Tags.find({}).limit(limit).skip(offset)
+    },
+    countDocuments:async()=>{
+        return await Tags.countDocuments()
+    },
+    getAITagByName:async (name)=>{
+        return await Tags.findOne({name})
+    },
+
 }

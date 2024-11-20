@@ -1,8 +1,10 @@
 import { Request, Response, Router } from "express";
 import AIModelController from "./controller";
 import { isAuthenticated } from "../../shared/middlewares/isAuthenticated";
-
-class AITagsController{
+import tagValidator from './validators/aiTagValidator'
+import sharedValidator from "../../shared/validators/sharedValidator";
+import { asyncHandler } from "../../utils/asyncHandler";
+class AITagsRouter{
     private router
     constructor(){
         this.router = Router()
@@ -10,23 +12,27 @@ class AITagsController{
     init(){
         this.router.use(isAuthenticated)
         return this.router
-        .get('/',this.getAllRecords)
-        .post('/',this.createRecord)
-        .delete('/:id',this.deleteRecord)
+        .get('/',sharedValidator.listRecords(),asyncHandler(this.getAllRecords))
+        .get('/:name',tagValidator.getRecordByName(),asyncHandler(this.getRecordByName))
+        .post('/',tagValidator.createRecord(),asyncHandler(this.createRecord))
+        .delete('/:id',sharedValidator.record(),asyncHandler(this.deleteRecord))
     }
 
-    getAllRecords(req:Request,res:Response){
+    async getAllRecords(req:Request,res:Response){
         const controller = new AIModelController()
         controller.getAllRecords(req,res)
     }
-
-    createRecord(req:Request,res:Response){
+    async getRecordByName(req:Request,res:Response){
+        const controller = new AIModelController()
+        controller.getRecordByName(req,res)
+    }
+    async createRecord(req:Request,res:Response){
         const controller = new AIModelController()
         controller.createRecord(req,res)
     }
-    deleteRecord(req:Request,res:Response){
+    async deleteRecord(req:Request,res:Response){
         const controller = new AIModelController()
         controller.deleteRecord(req,res)
     }
 }
-export default new AITagsController()
+export default new AITagsRouter()
