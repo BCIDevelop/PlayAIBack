@@ -9,6 +9,7 @@ import AuthRouter from './context/auth/routes'
 import fileUpload from 'express-fileupload'
 import AITagRouter from './context/aiTags/routes'
 import AIModelRouter from './context/aiModels/routes'
+import PlaygroundRouter from './context/playground/routes'
 class Server{
     public app: Express
     private port: string | undefined
@@ -30,6 +31,7 @@ class Server{
         
     }   
     router(){
+        this.app.use('/playground',PlaygroundRouter.init())
         this.app.use('/users',UserRouter.init())
         this.app.use('/tags',AITagRouter.init())
         this.app.use('/auth',AuthRouter.init())

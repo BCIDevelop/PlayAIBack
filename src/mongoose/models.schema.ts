@@ -9,7 +9,7 @@ export const modelSchema = new mongoose.Schema({
     tags: [{ type: String }], // For example Languague Processing, Computer Vision, Image Captioning, etc
     isSupervised : {type: Boolean,required:true},
     description:{type:String,required:true}
-  
+    
   },{ versionKey: false });
-  
+  modelSchema.index({ purpose: "text", tags:"text",typeAI:"text" },{weights:{purpose:1,tags:2,typeAI:1}}); 
   export const Models = mongoose.model('Models', modelSchema);
