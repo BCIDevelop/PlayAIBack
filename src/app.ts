@@ -10,6 +10,7 @@ import fileUpload from 'express-fileupload'
 import AITagRouter from './context/aiTags/routes'
 import AIModelRouter from './context/aiModels/routes'
 import PlaygroundRouter from './context/playground/routes'
+import HealthRouter from './context/health/routes'
 class Server{
     public app: Express
     private port: string | undefined
@@ -36,6 +37,7 @@ class Server{
         this.app.use('/tags',AITagRouter.init())
         this.app.use('/auth',AuthRouter.init())
         this.app.use('/models',AIModelRouter.init())
+        this.app.use('/health',HealthRouter.init())
         this.app.get('/error', (req, res, next) => {
             const error = new AuthenticationError(
               'You are not authorized to access this resource',
