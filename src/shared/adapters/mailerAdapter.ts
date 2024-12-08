@@ -1,6 +1,6 @@
 import {createTransport, Transporter} from "nodemailer"
 import SMTPTransport from "nodemailer/lib/smtp-transport"
-import { MailerAdapter } from '../../application/adapters';
+import { MailerAdapter } from '../../context/users/application/adapters';
 import { ConnectionOptions } from 'tls';
 class EmailServer implements MailerAdapter{
   private host:string|undefined
@@ -43,4 +43,4 @@ class EmailServer implements MailerAdapter{
       }
   }
 }
-export default new EmailServer()
+export const createMailerAdapter = ()=> new EmailServer()

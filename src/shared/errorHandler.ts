@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextFunction, Request, Response, } from 'express';
-import { BaseError } from './BaseError';
+import { BaseError } from './errors/BaseError';
 
 export const errorHandler = (
   err: Error,
@@ -12,7 +12,7 @@ export const errorHandler = (
   if (err instanceof BaseError) {
      res.status(err.status).json({ error: err.message });
   }
-if (err.name === 'PrismaClientInitializationError') {
+if (err.name === 'MongooseServerSelectionError') {
     console.error({
       message: err.message,
       status: 400,
