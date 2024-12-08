@@ -1,5 +1,5 @@
 import "dotenv/config"
-import Server from '../src/app'
+import Server from './app'
 import database from "./database/database"
 
 
