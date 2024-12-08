@@ -1,5 +1,5 @@
 #!/bin/bash
 set -e
-npm install
+npm install --include=dev
 tsc
 npm prune --production
