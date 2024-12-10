@@ -54,6 +54,7 @@ class UserController{
         return res.status(204).json({})
     }
     async verifyUser(req:Request,res:Response){
+        console.log('legooooooooooooooooooooooooooo')
         console.log(req.body.token)
         await this.service.verifyUserDB(this.repository,this.jwt,req.body.token)
         return res.status(204).json({})
